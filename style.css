@@ -26,7 +26,7 @@ header {
 }
 
 .NAVBAR {
-    background-color: #00394C;
+    background-color: #1C5163;
     border-bottom: 2px solid #D27212;
     padding: 0.6rem 0;
 }
@@ -38,9 +38,16 @@ header {
     object-fit: cover;
 }
 
+.LOGO1 {
+    width: auto;
+    height: 55px;
+    object-fit: cover;
+}
+
 .TITULOPAG {
     color: #ffffff;
     transition: color 5.0s ease;
+    padding: 0 70px;
 }
 
 .NAVBAR .btn {
