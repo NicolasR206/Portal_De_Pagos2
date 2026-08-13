@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTAL DE PAGOS - HISTORIAL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body> 
+    
+
+
+<!-- NAVBAR RESPONSIVE -->
+<nav class="navbar navbar-expand-lg NAVBAR shadow-sm py-2"> 
+  <div class="container-fluid px-3">
+    <a class="navbar-brand d-flex align-items-center me-auto me-lg-0" href="../index.html">
+       <img src="../multimedia/LOGO.png" alt="Logo SAC" class="LOGO">
+    </a>
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="d-none d-lg-block text-center flex-grow-1">
+      <span class="navbar-text fs-3 fw-bold text-uppercase tracking-wider TITULOPAG">
+        Portal de pagos
+      </span>
+    </div>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarContenido">
+      <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 mt-3 mt-lg-0">
+        <a href="facturas.html" class="btn BOTON2 w-lg-auto"><span>Facturas</span></a>
+        <a href="pago-abierto.html" class="btn BOTON2 w-lg-auto"><span>Pago Abierto</span></a>
+        <a href="historial.html" class="btn BOTON1 w-lg-auto"><span>Historial</span></a>
+        <a href="analitica.html" class="btn BOTON2 w-lg-auto"><span>Analítica</span></a>
+        
+        <a href="../PDPSAC/index.html" class="btn btn-sm btn-outline-secondary ms-0 ms-lg-2 mt-2 mt-lg-0 align-self-start align-self-lg-center" title="Acceso a Gestión Interna">
+          <i class="bi bi-shield-lock-fill me-1 me-lg-0"></i>
+          <span class="d-lg-none">Acceso Empleados</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="container mt-5">
+
+<!-- Tarjetas de auditoría / resumen de pagos -->
+<div class="row g-3 mb-4">
+    <!-- Facturas Pagadas -->
+    <div class="col-md-3">
+        <div class="card CARD p-3 shadow-sm text-start bg-white border-bottom border-success border-4 position-relative">
+            <div>
+                <span class="small text-uppercase fw-bold text-muted d-block">Facturas Pagadas</span>
+                <h4 id="audit-cant-pagadas" class="fw-bold text-success mt-1 mb-0">0</h4>
+            </div>
+            <!-- Ícono de factura completada -->
+            <i class="bi bi-file-earmark-check position-absolute top-50 end-0 translate-middle-y me-3 fs-3 text-success opacity-75"></i>
+        </div>
+    </div>
+
+    <!-- Monto Total Pagado -->
+    <div class="col-md-3">
+        <div class="card CARD p-3 shadow-sm text-start bg-white border-bottom border-success border-4 position-relative">
+            <div>
+                <span class="small text-uppercase fw-bold text-muted d-block">Monto Total Pagado</span>
+                <h4 id="audit-monto-pagado" class="fw-bold text-success mt-1 mb-0">$0.00</h4>
+            </div>
+            <!-- Ícono de dinero / flujo de efectivo -->
+            <i class="bi bi-cash-stack position-absolute top-50 end-0 translate-middle-y me-3 fs-3 text-success opacity-75"></i>
+        </div>
+    </div>
+
+    <!-- Ahorro Pronto Pago -->
+    <div class="col-md-3">
+        <div class="card CARD p-3 shadow-sm text-start bg-white border-bottom border-4 position-relative" style="border-color: #1c7e94 !important;">
+            <div>
+                <span class="small text-uppercase fw-bold text-muted d-block">Ahorro Pronto Pago</span>
+                <h4 id="audit-ahorro" class="fw-bold mt-1 mb-0" style="color: #1c7e94;">$0.00</h4>
+            </div>
+            <!-- Ícono de alcancía / descuento -->
+            <i class="bi bi-piggy-bank position-absolute top-50 end-0 translate-middle-y me-3 fs-3 opacity-75" style="color: #1c7e94;"></i>
+        </div>
+    </div>
+
+    <!-- Recargo por Morosidad -->
+    <div class="col-md-3">
+        <div class="card CARD p-3 shadow-sm text-start bg-white border-bottom border-danger border-4 position-relative">
+            <div>
+                <span class="small text-uppercase fw-bold text-muted d-block">Recargo por Morosidad</span>
+                <h4 id="audit-mora" class="fw-bold mt-1 mb-0" style="color: #ff851b;">$0.00</h4>
+            </div>
+            <!-- Ícono de alerta / penalización -->
+            <i class="bi bi-exclamation-diamond position-absolute top-50 end-0 translate-middle-y me-3 fs-3 opacity-75" style="color: #ff851b;"></i>
+        </div>
+    </div>
+</div>
+
+    <!-- TARJETA FILTROS MULTICRITERIO -->
+    <div class="card CARD p-3 shadow-sm bg-white mb-4">
+        <h6 class="fw-bold text-dark text-uppercase small mb-2"><i class="bi bi-funnel-fill me-1"></i> Filtrar Historial por Cliente o Fechas</h6>
+        <div class="row g-2">
+            <div class="col-md-5">
+                <input type="text" id="filtro-hist-buscar" class="form-control form-control-sm font-monospace" placeholder="Buscar por Cliente, NIT, ID Factura o Ref. ePayco...">
+            </div>
+            <div class="col-md-3">
+                <input type="date" id="filtro-hist-desde" class="form-control form-control-sm" title="Pago Desde">
+            </div>
+            <div class="col-md-3">
+                <input type="date" id="filtro-hist-hasta" class="form-control form-control-sm" title="Pago Hasta">
+            </div>
+            <div class="col-md-1">
+                <button id="btn-limpiar-hist" class="btn BOTON11 btn-sm btn-secondary w-100"><i class="bi bi-arrow-counterclockwise"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card CARD p-4 shadow-sm bg-white mb-5">
+        <h3 class="fw-bold text-dark mb-4">Historial de Transacciones y Auditoría</h3>
+        
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light text-secondary small text-uppercase">
+                    <tr>
+                        <th>Cliente / NIT</th>
+                        <th>Fecha Pago</th>
+                        <th>Ref. ePayco</th>
+                        <th>Nro. Factura</th>
+                        <th>Tipo</th>
+                        <th>Monto Base</th>
+                        <th>Mora / Desc</th>
+                        <th>Monto Total (COP)</th>
+                        <th>Sincronización SAP</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-historial-body" class="text-dark"></tbody>
+            </table>
+        </div>
+
+        <div class="mt-4">
+            <a href="../index.html" class="text-decoration-none fw-semibold" style="color: #1C5163;">
+                <i class="bi bi-arrow-left me-1"></i> Regresar al Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="data.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderizarHistorial();
+
+        document.getElementById("filtro-hist-buscar").addEventListener("input", renderizarHistorial);
+        document.getElementById("filtro-hist-desde").addEventListener("change", renderizarHistorial);
+        document.getElementById("filtro-hist-hasta").addEventListener("change", renderizarHistorial);
+        
+        document.getElementById("btn-limpiar-hist").addEventListener("click", function() {
+            document.getElementById("filtro-hist-buscar").value = "";
+            document.getElementById("filtro-hist-desde").value = "";
+            document.getElementById("filtro-hist-hasta").value = "";
+            renderizarHistorial();
+        });
+    });
+
+    function renderizarHistorial() {
+        const txt = document.getElementById("filtro-hist-buscar").value.trim().toUpperCase();
+        const fDesde = document.getElementById("filtro-hist-desde").value;
+        const fHasta = document.getElementById("filtro-hist-hasta").value;
+
+        const pagadas = FACTURAS_DB.filter(f => {
+            if (f.estado !== "pagada") return false;
+
+            let cumpleTxt = true;
+            if (txt) {
+                cumpleTxt = (f.id && f.id.toUpperCase().includes(txt)) ||
+                            (f.refEpayco && f.refEpayco.toUpperCase().includes(txt)) ||
+                            (f.clienteId && f.clienteId.toUpperCase().includes(txt)) ||
+                            (f.clienteNombre && f.clienteNombre.toUpperCase().includes(txt));
+            }
+
+            let cumpleDesde = fDesde ? f.fechaPago >= fDesde : true;
+            let cumpleHasta = fHasta ? f.fechaPago <= fHasta : true;
+
+            return cumpleTxt && cumpleDesde && cumpleHasta;
+        });
+
+        // Recalcular métricas para los pagos filtrados
+        let totalSuma = 0, ahorro = 0, mora = 0;
+        pagadas.forEach(f => {
+            totalSuma += (f.base + f.mora - f.descuento);
+            ahorro += f.descuento;
+            mora += f.mora;
+        });
+
+        document.getElementById("audit-cant-pagadas").innerText = pagadas.length;
+        document.getElementById("audit-monto-pagado").innerText = formatearCOP(totalSuma);
+        document.getElementById("audit-ahorro").innerText = formatearCOP(ahorro);
+        document.getElementById("audit-mora").innerText = formatearCOP(mora);
+
+        const tbody = document.getElementById("tabla-historial-body");
+        tbody.innerHTML = "";
+
+        if(pagadas.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-muted">No se registran pagos con los filtros seleccionados.</td></tr>`;
+            return;
+        }
+
+        pagadas.forEach(f => {
+            const total = f.base + f.mora - f.descuento;
+            let detMoraDesc = `<span class="text-muted small">-</span>`;
+            if (f.mora > 0) detMoraDesc = `<span class="text-danger small">+${formatearCOP(f.mora)} (Mora)</span>`;
+            if (f.descuento > 0) detMoraDesc = `<span class="text-success small">-${formatearCOP(f.descuento)} (Desc)</span>`;
+
+            const filaHTML = `
+                <tr>
+                    <td class="small fw-semibold text-primary">
+                        ${f.clienteNombre || 'ACME S.A.S.'}<br>
+                        <span class="text-muted font-monospace font-xs">${f.clienteId || 'CLI-900123456'}</span>
+                    </td>
+                    <td class="small">${f.fechaPago}</td>
+                    <td class="font-monospace small">${f.refEpayco || 'N/A'}</td>
+                    <td class="fw-bold">#${f.id}</td>
+                    <td><span class="badge bg-light text-dark border">${f.tipo}</span></td>
+                    <td>${formatearCOP(f.base)}</td>
+                    <td>${detMoraDesc}</td>
+                    <td class="fw-bold text-success">${formatearCOP(total)}</td>
+                    <td>
+                        <div class="small text-muted">
+                            <span class="text-success"><i class="bi bi-circle-fill font-xs me-1"></i>Sincronizado</span><br>
+                            <span style="font-size: 0.75rem;">SAP Service Layer Activo</span>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            tbody.insertAdjacentHTML('beforeend', filaHTML);
+        });
+    }
+</script>
+
+<!-- FOOTER CON ACCESO INTERNO SECUNDARIO -->
+<footer class="border-top py-3 text-center small">
+    <div class="container d-flex justify-content-between align-items-center">
+        <span>© 2026 Portal de Pagos Corporativo. Todos los derechos reservados.</span>
+        <a href="PDPSAC/index.html" class="text-decoration-none">
+            <i class="bi bi-shield-lock me-1"></i> Acceso Empleados (PDPSAC)
+        </a>
+    </div>
+</footer>
+</body>
+</html>

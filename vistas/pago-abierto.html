@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PORTAL DE PAGOS - PAGO ABIERTO</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body class="b">
+    
+
+<!-- NAVBAR RESPONSIVE -->
+<nav class="navbar navbar-expand-lg NAVBAR shadow-sm py-2"> 
+  <div class="container-fluid px-3">
+    <a class="navbar-brand d-flex align-items-center me-auto me-lg-0" href="../index.html">
+       <img src="../multimedia/LOGO.png" alt="Logo SAC" class="LOGO">
+    </a>
+
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="d-none d-lg-block text-center flex-grow-1">
+      <span class="navbar-text fs-3 fw-bold text-uppercase tracking-wider TITULOPAG">
+        Portal de pagos
+      </span>
+    </div>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarContenido">
+      <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 mt-3 mt-lg-0">
+        <a href="facturas.html" class="btn BOTON2 w-lg-auto"><span>Facturas</span></a>
+        <a href="pago-abierto.html" class="btn BOTON1 w-lg-auto"><span>Pago Abierto</span></a>
+        <a href="historial.html" class="btn BOTON2 w-lg-auto"><span>Historial</span></a>
+        <a href="analitica.html" class="btn BOTON2 w-lg-auto"><span>Analítica</span></a>
+        
+        <a href="../PDPSAC/index.html" class="btn btn-sm btn-outline-secondary ms-0 ms-lg-2 mt-2 mt-lg-0 align-self-start align-self-lg-center" title="Acceso a Gestión Interna">
+          <i class="bi bi-shield-lock-fill me-1 me-lg-0"></i>
+          <span class="d-lg-none">Acceso Empleados</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center g-4">
+        
+        <!-- COLUMNA PRINCIPAL: FORMULARIO DE ANTICIPO -->
+        <div class="col-md-7">
+            <div class="card CARD p-4 shadow-sm bg-white">
+                <div class="border-bottom pb-3 mb-4">
+                    <h3 class="fw-bold text-dark m-0">ABONO</h3>
+                    <small class="text-muted">Abonos libres con generación automática de Recibo de Caja en SAP Service Layer</small>
+                </div>
+
+                <form id="form-pago-abierto" onsubmit="procesarAnticipo(event)">
+                    
+                    <!-- MONTO A ABONAR -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-uppercase">Monto a abonar (COP)</label>
+                        <div class="input-group CARDINT input-group-lg mb-2">
+                            <span class="input-group-text border-end-0 fw-bold" style="background-color: #D27212;">$</span>
+                            <input type="number" id="input-monto" class="form-control border-start-0 fw-bold fs-4" placeholder="0.00" min="1000" step="1000" required oninput="calcularResumenAbono()">
+                        </div>
+                    </div>
+
+                    <!-- OPCIÓN DE SELECCIONAR FACTURA (DEBAJO DEL MONTO) -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-uppercase" style="font-weight: bold; color: #1C5163;">
+                            <i class="bi bi-receipt me-1"></i> Vincular a Factura Específica (Opcional)
+                        </label>
+                        <select id="select-factura" class="form-select CARDINT form-select-md fw-semibold" onchange="actualizarClientePorFactura()">
+                            <option value="">-- Sin factura (Anticipo general a cuenta) --</option>
+                            <!-- Inyectado dinámicamente desde JS -->
+                        </select>
+                        <small class="text-muted d-block mt-1 font-xs">Seleccione si este anticipo va dirigido a cruzar una factura pendiente.</small>
+                    </div>
+
+                    <!-- CLIENTE / EMPRESA -->
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small text-uppercase" style="color: #1C5163;">Cliente / Empresa</label>
+                        <input type="text" id="input-cliente-nombre" class="form-control CARDINT fw-semibold" placeholder="Nombre de la empresa o cliente" required oninput="calcularResumenAbono()">
+                    </div>
+
+                    <!-- MOTIVO Y COMENTARIO -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-uppercase" style="color: #1C5163;">Comentario / Concepto del Pago</label>
+                        <textarea id="input-comentario" class="form-control CARDINT" rows="3" placeholder="Indique la orden de compra, proyecto o motivo de este anticipo..." required></textarea>
+                    </div>
+
+                    <!-- BOTÓN PRINCIPAL DE CHECKOUT -->
+                    <button type="submit" class="btn BOTON4 w-100 py-2 font-uppercase fw-bold fs-6">
+                        <i class="bi bi-shield-lock-fill me-1"></i> Pagar Abierto con ePayco
+                    </button>
+                </form>
+
+                <div class="mt-4 text-center">
+                    <a href="../index.html" class="text-decoration-none small fw-semibold" style="color: #1C5163;">
+                        <i class="bi bi-arrow-left me-1"></i> Volver al Dashboard Principal
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUMNA SECUNDARIA: RESUMEN DEL ANTICIPO -->
+        <div class="col-md-5">
+            <div class="card CARD3 p-4 shadow-sm border-0 bg-white mb-4 border-start border-primary border-4">
+                <h6 class="fw-bold text-dark text-uppercase small mb-3">
+                    <i class="bi bi-file-earmark-text me-1"></i> Resumen del Abono
+                </h6>
+                
+                <ul class="list-group list-group-flush mb-3 small">
+                    <li class="list-group-item d-flex justify-content-between bg-transparent px-0">
+                        <span class="fw-bold">Cliente:</span>
+                        <strong id="resumen-cliente" class="text-dark text-end">No especificado</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-transparent px-0">
+                        <span class="fw-bold">Fecha de Registro:</span>
+                        <strong id="resumen-fecha" class="text-dark">--/--/----</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-transparent px-0">
+                        <span class="fw-bold">Factura Vinculada:</span>
+                        <strong id="resumen-factura-id" class="text-primary font-monospace">Ninguna</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-transparent px-0">
+                        <span class="fw-bold">Valor del Anticipo:</span>
+                        <strong id="resumen-valor-anticipo" class="text-success fs-6">$0.00</strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between bg-transparent px-0 border-top pt-2 fs-6">
+                        <span class="fw-bold text-dark">Saldo Pendiente Restante:</span>
+                        <strong id="resumen-saldo" class="text-danger fs-5">$0.00</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="data.js"></script>
+<script>
+    let facturaSeleccionadaObj = null;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Establecer fecha actual
+        const hoy = new Date().toISOString().split('T')[0];
+        document.getElementById("resumen-fecha").innerText = hoy;
+
+        cargarFacturasDesplegable();
+        calcularResumenAbono();
+    });
+
+    // Cargar facturas no pagadas en el desplegable
+    function cargarFacturasDesplegable() {
+        const select = document.getElementById("select-factura");
+        const facturasPendientes = FACTURAS_DB.filter(f => f.estado !== "pagada");
+
+        facturasPendientes.forEach(f => {
+            const subtotal = f.base || 0;
+            const impuesto = f.impuesto || 0;
+            const mora = f.mora || 0;
+            const descuento = f.descuento || 0;
+            const abonado = f.abonado || 0;
+            
+            const saldoActual = (subtotal + impuesto + mora - descuento) - abonado;
+
+            const opt = document.createElement("option");
+            opt.value = f.id;
+            opt.innerText = `#${f.id} - ${f.clienteNombre} (Saldo: ${formatearCOP(saldoActual)})`;
+            select.appendChild(opt);
+        });
+    }
+
+    // Evento al cambiar la opción en el selector de factura
+    function actualizarClientePorFactura() {
+        const idFactura = document.getElementById("select-factura").value;
+        const inputCliente = document.getElementById("input-cliente-nombre");
+        const inputMonto = document.getElementById("input-monto");
+
+        if (idFactura) {
+            facturaSeleccionadaObj = FACTURAS_DB.find(f => f.id === idFactura);
+            if (facturaSeleccionadaObj) {
+                inputCliente.value = facturaSeleccionadaObj.clienteNombre;
+                
+                const subtotal = facturaSeleccionadaObj.base || 0;
+                const impuesto = facturaSeleccionadaObj.impuesto || 0;
+                const mora = facturaSeleccionadaObj.mora || 0;
+                const descuento = facturaSeleccionadaObj.descuento || 0;
+                const abonado = facturaSeleccionadaObj.abonado || 0;
+                
+                const saldoActual = (subtotal + impuesto + mora - descuento) - abonado;
+                
+                if (!inputMonto.value || parseFloat(inputMonto.value) === 0) {
+                    inputMonto.value = saldoActual;
+                }
+            }
+        } else {
+            facturaSeleccionadaObj = null;
+        }
+
+        calcularResumenAbono();
+    }
+
+    // Calcular el resumen en tiempo real
+    function calcularResumenAbono() {
+        const montoAnticipo = parseFloat(document.getElementById("input-monto").value) || 0;
+        const nombreCliente = document.getElementById("input-cliente-nombre").value.trim();
+
+        document.getElementById("resumen-cliente").innerText = nombreCliente || "No especificado";
+        document.getElementById("resumen-valor-anticipo").innerText = formatearCOP(montoAnticipo);
+
+        if (facturaSeleccionadaObj) {
+            document.getElementById("resumen-factura-id").innerText = `#${facturaSeleccionadaObj.id}`;
+
+            const subtotal = facturaSeleccionadaObj.base || 0;
+            const impuesto = facturaSeleccionadaObj.impuesto || 0;
+            const mora = facturaSeleccionadaObj.mora || 0;
+            const descuento = facturaSeleccionadaObj.descuento || 0;
+            const abonado = facturaSeleccionadaObj.abonado || 0;
+
+            const saldoAntesAnticipo = (subtotal + impuesto + mora - descuento) - abonado;
+            const saldoNuevo = Math.max(0, saldoAntesAnticipo - montoAnticipo);
+
+            document.getElementById("resumen-saldo").innerText = formatearCOP(saldoNuevo);
+        } else {
+            document.getElementById("resumen-factura-id").innerText = "Ninguna (Anticipo General)";
+            document.getElementById("resumen-saldo").innerText = "$0.00 COP (Saldo A Favor)";
+        }
+    }
+
+    function procesarAnticipo(e) {
+        e.preventDefault();
+        const monto = parseFloat(document.getElementById("input-monto").value);
+        const cliente = document.getElementById("input-cliente-nombre").value;
+        const comentario = document.getElementById("input-comentario").value;
+        const facturaId = document.getElementById("select-factura").value || "Sin Vincular";
+
+        if (monto < 1000) {
+            alert("Ingrese un monto válido para procesar el anticipo.");
+            return;
+        }
+
+        alert(`Iniciando Checkout ePayco:\n- Cliente: ${cliente}\n- Factura: ${facturaId}\n- Anticipo: ${formatearCOP(monto)}\n- Concepto: ${comentario}\n\nConectando con la pasarela...`);
+    }
+</script>
+
+<!-- FOOTER CON ACCESO INTERNO SECUNDARIO -->
+<footer class="border-top py-3 text-center small">
+    <div class="container d-flex justify-content-between align-items-center">
+        <span>© 2026 Portal de Pagos Corporativo. Todos los derechos reservados.</span>
+        <a href="PDPSAC/index.html" class="text-decoration-none">
+            <i class="bi bi-shield-lock me-1"></i> Acceso Empleados (PDPSAC)
+        </a>
+    </div>
+</footer>
+</body>
+</html>
