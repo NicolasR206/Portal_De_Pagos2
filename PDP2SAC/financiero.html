@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../style.css">
 
-
     <style>
         /* Estilo compacto tipo Pill para el Navbar */
         .nav-pills-navbar .nav-link {
@@ -31,20 +30,43 @@
             border-color: #ffffff !important;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
+
+        /* Badges de Estado SAP Personalizados */
+        .badge-pagada {
+            background-color: #198754 !important;
+            color: #ffffff !important;
+        }
+        .badge-vencida {
+            background-color: #ff851b !important;
+            color: #ffffff !important;
+        }
+        .badge-pendiente {
+            background-color: #1c7e94 !important;
+            color: #ffffff !important;
+        }
+
+        /* Botón de Reembolso Personalizado */
+        .btn-reembolsar {
+            color: #ff851b;
+            border: 1px solid #ff851b;
+            background-color: transparent;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-reembolsar:hover {
+            color: #ffffff;
+            background-color: #ff851b;
+            border-color: #ff851b;
+        }
     </style>
-
-
 </head>
 <body>
-
-
 
 <!-- NAVBAR RESPONSIVE UNIFICADO -->
 <nav class="navbar navbar-expand-lg NAVBAR shadow-sm py-2"> 
   <div class="container-fluid px-3">
     <!-- Logo -->
     <a class="navbar-brand d-flex align-items-center me-auto me-lg-0" href="index.html">
-       <img src="../multimedia/LOGO.png" alt="Logo SAC" class="LOGO">
+       <img src="../multimedia/LOGO1.png" alt="Logo SAC" class="LOGO1">
     </a>
 
     <!-- Botón Hamburguesa Móvil -->
@@ -59,11 +81,11 @@
       </span>
     </div>
 
-    <!-- Pestañas + Botones de Acción (Todo Junto a la Derecha) -->
+    <!-- Pestañas + Botones de Acción -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarContenido">
       <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2 mt-3 mt-lg-0">
         
-        <!-- Pestañas de Cambio de Vista en el Navbar -->
+        <!-- Pestañas de Cambio de Vista -->
         <ul class="nav nav-pills nav-pills-navbar border-0 gap-1 me-lg-2" id="tabOperacion" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active text-uppercase" id="tab-finanzas" data-bs-toggle="tab" data-bs-target="#sec-finanzas" type="button" role="tab" aria-controls="sec-finanzas" aria-selected="true">
@@ -91,71 +113,62 @@
   </div>
 </nav>
 
-
-
 <div class="container mt-4 mb-5">
     <div class="tab-content" id="contenidoOperacion">
         
-
         <!-- SECCIÓN 1: GESTIÓN FINANCIERA & CONCILIACIÓN -->
-
-        
         <div class="tab-pane fade show active" id="sec-finanzas" role="tabpanel" aria-labelledby="tab-finanzas">
             
             <!-- RESUMEN DE CARTERA -->
             <div class="row g-3 mb-4">
-    <!-- Recaudado Bruto -->
-    <div class="col-md-3">
-        <div class="card CARD p-3 shadow-sm border-0 text-start bg-white border-start border-success border-4 h-100 position-relative">
-            <div>
-                <span class="small text-uppercase fw-bold d-block">Recaudado Bruto</span>
-                <h3 id="fin-total-recaudado" class="fw-bold text-success mt-1 mb-0">$0.00</h3>
-                <small class="d-block mt-1" id="cnt-pagadas">0 transacciones</small>
-            </div>
-            <!-- Ícono de ingresos / crecimiento -->
-            <i class="bi bi-graph-up-arrow position-absolute top-50 end-0 translate-middle-y me-3 fs-3 text-success"></i>
-        </div>
-    </div>
+                <!-- Recaudado Bruto -->
+                <div class="col-md-3">
+                    <div class="card CARD p-3 shadow-sm border-0 text-start bg-white border-start border-success border-4 h-100 position-relative">
+                        <div>
+                            <span class="small text-uppercase fw-bold text-muted d-block">Recaudado Bruto</span>
+                            <h3 id="fin-total-recaudado" class="fw-bold text-success mt-1 mb-0">$0.00</h3>
+                            <small class="d-block mt-1 text-muted" id="cnt-pagadas">0 transacciones</small>
+                        </div>
+                        <i class="bi bi-graph-up-arrow position-absolute top-50 end-0 translate-middle-y me-3 fs-3 text-success opacity-75"></i>
+                    </div>
+                </div>
 
-    <!-- Cartera Vencida -->
-    <div class="col-md-3">
-        <div class="card CARD p-3 shadow-sm border-0 text-start bg-white border-start border-danger border-4 h-100 position-relative">
-            <div>
-                <span class="small text-uppercase fw-bold d-block">Cartera Vencida</span>
-                <h3 id="fin-cartera-vencida" class="fw-bold mt-1 mb-0" style="color: #ff851b;">$0.00</h3>
-                <small class="d-block mt-1" id="cnt-vencidas">0 facturas pendientes</small>
-            </div>
-            <!-- Ícono de vencimiento / calendario vencido -->
-            <i class="bi bi-calendar-x position-absolute top-50 end-0 translate-middle-y me-3 fs-3" style="color: #ff851b;"></i>
-        </div>
-    </div>
+                <!-- Cartera Vencida -->
+                <div class="col-md-3">
+                    <div class="card CARD p-3 shadow-sm border-0 text-start bg-white border-start border-danger border-4 h-100 position-relative">
+                        <div>
+                            <span class="small text-uppercase fw-bold text-muted d-block">Cartera Vencida</span>
+                            <h3 id="fin-cartera-vencida" class="fw-bold mt-1 mb-0" style="color: #ff851b;">$0.00</h3>
+                            <small class="d-block mt-1 text-muted" id="cnt-vencidas">0 facturas pendientes</small>
+                        </div>
+                        <i class="bi bi-calendar-x position-absolute top-50 end-0 translate-middle-y me-3 fs-3 opacity-75" style="color: #ff851b;"></i>
+                    </div>
+                </div>
 
-    <!-- Descuentos Aplicados -->
-    <div class="col-md-3">
-        <div class="card CARD p-3 shadow-sm border-0 text-start bg-white border-start border-primary border-4 h-100 position-relative">
-            <div>
-                <span class="small text-uppercase fw-bold d-block">Descuentos Aplicados</span>
-                <h3 id="fin-total-descuentos" class="fw-bold mt-1 mb-0" style="color: #1c7e94;">$0.00</h3>
-                <small class="d-block mt-1">Pronto pago otorgado</small>
-            </div>
-            <!-- Ícono de etiqueta / descuento -->
-            <i class="bi bi-tag position-absolute top-50 end-0 translate-middle-y me-3 fs-3" style="color: #1c7e94;"></i>
-        </div>
-    </div>
+                <!-- Descuentos Aplicados -->
+                <div class="col-md-3">
+                    <div class="card CARD p-3 shadow-sm border-0 text-start bg-white border-start border-primary border-4 h-100 position-relative">
+                        <div>
+                            <span class="small text-uppercase fw-bold text-muted d-block">Descuentos Aplicados</span>
+                            <h3 id="fin-total-descuentos" class="fw-bold mt-1 mb-0" style="color: #1c7e94;">$0.00</h3>
+                            <small class="d-block mt-1 text-muted">Pronto pago otorgado</small>
+                        </div>
+                        <i class="bi bi-tag position-absolute top-50 end-0 translate-middle-y me-3 fs-3 opacity-75" style="color: #1c7e94;"></i>
+                    </div>
+                </div>
 
-    <!-- Recargos por Mora -->
-    <div class="col-md-3">
-        <div class="card CARD p-3 shadow-sm border-0 text-start bg-white border-start border-warning border-4 h-100 position-relative">
-            <div>
-                <span class="small text-uppercase fw-bold d-block">Recargos por Mora</span>
-                <h3 id="fin-total-mora" class="fw-bold mt-1 mb-0" style="color: #ff851b;">$0.00</h3>
-                <small class="d-block mt-1">Intereses cobrados</small>
+                <!-- Recargos por Mora -->
+                <div class="col-md-3">
+                    <div class="card CARD p-3 shadow-sm border-0 text-start bg-white border-start border-warning border-4 h-100 position-relative">
+                        <div>
+                            <span class="small text-uppercase fw-bold text-muted d-block">Recargos por Mora</span>
+                            <h3 id="fin-total-mora" class="fw-bold mt-1 mb-0" style="color: #ff851b;">$0.00</h3>
+                            <small class="d-block mt-1 text-muted">Intereses cobrados</small>
+                        </div>
+                        <i class="bi bi-exclamation-triangle position-absolute top-50 end-0 translate-middle-y me-3 fs-3 opacity-75" style="color: #ff851b;"></i>
+                    </div>
+                </div>
             </div>
-            <!-- Ícono de advertencia / penalización -->
-            <i class="bi bi-exclamation-triangle position-absolute top-50 end-0 translate-middle-y me-3 fs-3" style="color: #ff851b;"></i>
-        </div>
-    </div>
-</div>
 
             <!-- TESORERÍA / CIERRE DE CAJA -->
             <div class="card CARD p-4 shadow-sm border-0 bg-white mb-4">
@@ -233,9 +246,7 @@
 
         </div>
 
-        <!-- ========================================== -->
-        <!-- SECCIÓN 2: ATENCIÓN & SOPORTE TÉCNICO       -->
-        <!-- ========================================== -->
+        <!-- SECCIÓN 2: ATENCIÓN & SOPORTE TÉCNICO -->
         <div class="tab-pane fade" id="sec-soporte" role="tabpanel" aria-labelledby="tab-soporte">
             
             <div class="row g-4">
@@ -243,11 +254,11 @@
                 <div class="col-md-4">
                     <div class="card CARD p-3 shadow-sm border-0 bg-white mb-4">
                         <h6 class="fw-bold text-dark text-uppercase small mb-3">
-                            <i class="bi bi-search me-1" style="color: #ff851b ;"></i> Buscador Exprés de Casos
+                            <i class="bi bi-search me-1" style="color: #ff851b;"></i> Buscador Exprés de Casos
                         </h6>
                         
                         <div class="mb-3">
-                            <label class="small  fw-semibold">ID Factura, Ref. ePayco o Cliente / NIT</label>
+                            <label class="small fw-semibold">ID Factura, Ref. ePayco o Cliente / NIT</label>
                             <input type="text" id="input-buscar" class="form-control font-monospace" placeholder="Ej: FAP-45210, EP-994812 o CLI-900123456">
                         </div>
 
@@ -258,11 +269,11 @@
                         </h6>
                         <div class="row g-2 mb-2">
                             <div class="col-6">
-                                <label class="font-xs  fw-semibold">Desde:</label>
+                                <label class="font-xs fw-semibold">Desde:</label>
                                 <input type="date" id="fecha-desde" class="form-control form-control-sm">
                             </div>
                             <div class="col-6">
-                                <label class="font-xs  fw-semibold">Hasta:</label>
+                                <label class="font-xs fw-semibold">Hasta:</label>
                                 <input type="date" id="fecha-hasta" class="form-control form-control-sm">
                             </div>
                         </div>
@@ -293,15 +304,15 @@
                         </h6>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="small">Pasarela ePayco API:</span>
-                            <span class="badge" style="background-color: #59b8ca ;">Operativo (99.9%)</span>
+                            <span class="badge" style="background-color: #59b8ca;">Operativo (99.9%)</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="small">SAP Service Layer:</span>
-                            <span class="badge" style="background-color: #59b8ca ;">Conectado</span>
+                            <span class="badge" style="background-color: #59b8ca;">Conectado</span>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="small">Webhook n8n Notif.:</span>
-                            <span class="badge" style="background-color: #59b8ca ;">En línea</span>
+                            <span class="badge" style="background-color: #59b8ca;">En línea</span>
                         </div>
                     </div>
                 </div>
@@ -315,7 +326,7 @@
 
                         <div id="pantalla-diagnostico">
                             <div class="text-center py-5">
-                                <div class="fs-1 mb-2"><i class="bi bi-headset" style="color: #59b8ca ;"></i></div>
+                                <div class="fs-1 mb-2"><i class="bi bi-headset" style="color: #59b8ca;"></i></div>
                                 <p class="m-0 fw-bold">Ingrese una referencia o seleccione un rango de fechas para desplegar la información.</p>
                             </div>
                         </div>
@@ -429,6 +440,18 @@
     let modalBs = null;
     let modalPlantillaBs = null;
 
+    // Helper para generar el badge de estado SAP con la nueva paleta de colores
+    function obtenerBadgeSAP(estado, etiquetaPersonalizada = null) {
+        let label = etiquetaPersonalizada || estado.toUpperCase();
+        if (estado === 'pagada') {
+            return `<span class="badge badge-pagada">${label}</span>`;
+        } else if (estado === 'vencida') {
+            return `<span class="badge badge-vencida">${label}</span>`;
+        } else {
+            return `<span class="badge badge-pendiente">${label}</span>`;
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
         modalBs = new bootstrap.Modal(document.getElementById('modalReembolso'));
         modalPlantillaBs = new bootstrap.Modal(document.getElementById('modalPlantilla'));
@@ -510,8 +533,10 @@
         facturasFiltradas.forEach(f => {
             const total = f.base + f.mora - f.descuento;
             let detMoraDesc = f.mora > 0 ? `<span class="text-danger fw-semibold">+${formatearCOP(f.mora)} (Mora)</span>` : (f.descuento > 0 ? `<span class="text-success fw-semibold">-${formatearCOP(f.descuento)} (Desc)</span>` : '-');
+            
+            // Botón de reembolso con el nuevo estilo personalizado
             let btnAccion = f.estado === 'pagada' 
-                ? `<button class="btn btn-sm btn-outline-danger py-0 px-2 fw-bold" onclick="abrirModalReembolso('${f.id}')"><i class="bi bi-arrow-counterclockwise me-1"></i>Reembolsar</button>` 
+                ? `<button class="btn btn-sm btn-reembolsar py-0 px-2 fw-bold" onclick="abrirModalReembolso('${f.id}')"><i class="bi bi-arrow-counterclockwise me-1"></i>Reembolsar</button>` 
                 : `<span class="text-muted small">-</span>`;
 
             tbody.innerHTML += `
@@ -521,7 +546,7 @@
                         <span class="text-muted font-monospace font-xs">${f.clienteId || 'CLI-900123456'}</span>
                     </td>
                     <td class="fw-bold">#${f.id}</td>
-                    <td><span class="badge ${f.estado === 'pagada' ? 'bg-success' : (f.estado === 'vencida' ? 'bg-danger' : 'bg-warning text-dark')}">${f.estado.toUpperCase()}</span></td>
+                    <td>${obtenerBadgeSAP(f.estado)}</td>
                     <td>${formatearCOP(f.base)}</td>
                     <td class="small">${detMoraDesc}</td>
                     <td class="fw-bold text-dark">${formatearCOP(total)}</td>
@@ -647,11 +672,11 @@
 
         let filasHtml = facturas.map(f => {
             const total = f.base + f.mora - f.descuento;
-            let badge = f.estado === 'pagada' ? '<span class="badge bg-success">PAGADA</span>' : (f.estado === 'vencida' ? '<span class="badge bg-danger">VENCIDA</span>' : '<span class="badge bg-warning text-dark">PENDIENTE</span>');
+            let badge = obtenerBadgeSAP(f.estado);
             return `<tr><td class="fw-bold">#${f.id}</td><td class="small">${f.clienteNombre || 'Cliente'}</td><td>${badge}</td><td>${f.fechaVencimiento}</td><td class="fw-bold text-dark">${formatearCOP(total)}</td><td><button class="btn btn-xs btn-outline-dark font-xs py-0" onclick="buscarSugerido('${f.id}')"><i class="bi bi-eye me-1"></i>Detalle</button></td></tr>`;
         }).join('');
 
-        contenedor.innerHTML = `<div class="p-3 bg-light rounded border mb-3"><div class="d-flex justify-content-between align-items-center"><div><span class="badge bg-dark text-uppercase mb-1"><i class="bi bi-calendar-check me-1"></i> Reporte por Fechas</span><h5 class="fw-bold text-dark mb-0">Rango: ${fDesde || 'Inicio'} a ${fHasta || 'Hoy'}</h5><small class="text-muted font-monospace">${facturas.length} Facturas localizadas</small></div><div class="text-end"><span class="small text-muted d-block">Monto Liquidado:</span><h4 class="fw-bold text-primary m-0">${formatearCOP(totalSuma)}</h4></div></div></div><div class="row g-2 mb-3"><div class="col-4"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Pagadas</small><strong class="text-success fs-6">${cantPagadas}</strong></div></div><div class="col-4"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Vencidas</small><strong class="text-danger fs-6">${cantVencidas}</strong></div></div><div class="col-4"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Pendientes</small><strong class="text-warning fs-6">${cantPendientes}</strong></div></div></div><h6 class="fw-bold text-dark text-uppercase small mb-2"><i class="bi bi-list-check me-1"></i> Facturas Encontradas:</h6><div class="table-responsive" style="max-height: 220px; overflow-y: auto;"><table class="table table-sm table-hover align-middle font-xs"><thead class="table-dark"><tr><th>Factura</th><th>Cliente</th><th>Estado</th><th>Vencimiento</th><th>Monto Total</th><th>Acción</th></tr></thead><tbody>${filasHtml}</tbody></table></div>`;
+        contenedor.innerHTML = `<div class="p-3 bg-light rounded border mb-3"><div class="d-flex justify-content-between align-items-center"><div><span class="badge bg-dark text-uppercase mb-1"><i class="bi bi-calendar-check me-1"></i> Reporte por Fechas</span><h5 class="fw-bold text-dark mb-0">Rango: ${fDesde || 'Inicio'} a ${fHasta || 'Hoy'}</h5><small class="text-muted font-monospace">${facturas.length} Facturas localizadas</small></div><div class="text-end"><span class="small text-muted d-block">Monto Liquidado:</span><h4 class="fw-bold text-primary m-0">${formatearCOP(totalSuma)}</h4></div></div></div><div class="row g-2 mb-3"><div class="col-4"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Pagadas</small><strong class="fs-6" style="color: #198754;">${cantPagadas}</strong></div></div><div class="col-4"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Vencidas</small><strong class="fs-6" style="color: #ff851b;">${cantVencidas}</strong></div></div><div class="col-4"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Pendientes</small><strong class="fs-6" style="color: #1c7e94;">${cantPendientes}</strong></div></div></div><h6 class="fw-bold text-dark text-uppercase small mb-2"><i class="bi bi-list-check me-1"></i> Facturas Encontradas:</h6><div class="table-responsive" style="max-height: 220px; overflow-y: auto;"><table class="table table-sm table-hover align-middle font-xs"><thead class="table-dark"><tr><th>Factura</th><th>Cliente</th><th>Estado</th><th>Vencimiento</th><th>Monto Total</th><th>Acción</th></tr></thead><tbody>${filasHtml}</tbody></table></div>`;
     }
 
     function renderizarVistaCliente(clienteRef, facturas, contenedor) {
@@ -665,20 +690,22 @@
 
         let filasFacturasHtml = facturas.map(f => {
             const total = f.base + f.mora - f.descuento;
-            let badge = f.estado === 'pagada' ? '<span class="badge bg-success">PAGADA</span>' : (f.estado === 'vencida' ? '<span class="badge bg-danger">VENCIDA</span>' : '<span class="badge bg-warning text-dark">PENDIENTE</span>');
+            let badge = obtenerBadgeSAP(f.estado);
             return `<tr><td class="fw-bold">#${f.id}</td><td>${badge}</td><td>${f.fechaVencimiento}</td><td class="fw-bold text-dark">${formatearCOP(total)}</td><td class="font-monospace small text-muted">${f.refEpayco || 'N/A'}</td><td><button class="btn btn-xs btn-outline-dark font-xs py-0" onclick="buscarSugerido('${f.id}')"><i class="bi bi-eye me-1"></i>Ver Detalle</button></td></tr>`;
         }).join('');
 
-        contenedor.innerHTML = `<div class="p-3 bg-light rounded border mb-3"><div class="d-flex justify-content-between align-items-center"><div><span class="badge bg-primary text-uppercase mb-1">Ficha de Cliente SAP</span><h4 class="fw-bold text-dark mb-0">${clienteNombre}</h4><small class="text-muted font-monospace">Ref: ${clienteId}</small></div><div class="text-end"><span class="small text-muted d-block">Monto Acumulado Total:</span><h4 class="fw-bold text-primary m-0">${formatearCOP(totalSuma)}</h4></div></div></div><div class="row g-2 mb-3"><div class="col-6"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Pagadas</small><strong class="text-success fs-5">${cantPagadas}</strong></div></div><div class="col-6"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Por Pagar / Vencidas</small><strong class="text-danger fs-5">${cantPendientes}</strong></div></div></div><h6 class="fw-bold text-dark text-uppercase small mb-2"><i class="bi bi-receipt me-1"></i> Facturas Asociadas:</h6><div class="table-responsive" style="max-height: 220px; overflow-y: auto;"><table class="table table-sm table-hover align-middle font-xs"><thead class="table-dark"><tr><th>Factura</th><th>Estado</th><th>Vencimiento</th><th>Total Liquidado</th><th>Ref. ePayco</th><th>Acción</th></tr></thead><tbody>${filasFacturasHtml}</tbody></table></div>`;
+        contenedor.innerHTML = `<div class="p-3 bg-light rounded border mb-3"><div class="d-flex justify-content-between align-items-center"><div><span class="badge bg-primary text-uppercase mb-1">Ficha de Cliente SAP</span><h4 class="fw-bold text-dark mb-0">${clienteNombre}</h4><small class="text-muted font-monospace">Ref: ${clienteId}</small></div><div class="text-end"><span class="small text-muted d-block">Monto Acumulado Total:</span><h4 class="fw-bold text-primary m-0">${formatearCOP(totalSuma)}</h4></div></div></div><div class="row g-2 mb-3"><div class="col-6"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Pagadas</small><strong class="fs-5" style="color: #198754;">${cantPagadas}</strong></div></div><div class="col-6"><div class="p-2 border rounded bg-white text-center"><small class="text-muted d-block text-uppercase font-xs">Por Pagar / Vencidas</small><strong class="fs-5" style="color: #ff851b;">${cantPendientes}</strong></div></div></div><h6 class="fw-bold text-dark text-uppercase small mb-2"><i class="bi bi-receipt me-1"></i> Facturas Asociadas:</h6><div class="table-responsive" style="max-height: 220px; overflow-y: auto;"><table class="table table-sm table-hover align-middle font-xs"><thead class="table-dark"><tr><th>Factura</th><th>Estado</th><th>Vencimiento</th><th>Total Liquidado</th><th>Ref. ePayco</th><th>Acción</th></tr></thead><tbody>${filasFacturasHtml}</tbody></table></div>`;
     }
 
     function renderizarVistaFactura(f, contenedor) {
         const total = f.base + f.mora - f.descuento;
         const esPagada = f.estado === "pagada";
         const esVencida = f.estado === "vencida";
-        let badgeEstado = esPagada ? '<span class="badge bg-success">PAGADO & SYNC</span>' : (esVencida ? '<span class="badge bg-danger">VENCIDO (CON MORA)</span>' : '<span class="badge bg-warning text-dark">PENDIENTE</span>');
+        let badgeEstado = esPagada 
+            ? obtenerBadgeSAP('pagada', 'PAGADO & SYNC') 
+            : (esVencida ? obtenerBadgeSAP('vencida', 'VENCIDO (CON MORA)') : obtenerBadgeSAP('pendiente', 'PENDIENTE'));
 
-        contenedor.innerHTML = `<div class="p-2 bg-light rounded border mb-3"><span class="text-muted font-xs d-block">Cliente: <strong>${f.clienteNombre || 'ACME Industrial S.A.S.'}</strong> (${f.clienteId || 'CLI-900123456'})</span></div><div class="row g-3 mb-4"><div class="col-md-6"><div class="p-3 bg-light rounded border"><span class="text-muted small d-block fw-bold text-uppercase">Factura ID</span><h4 class="fw-bold text-dark m-0">#${f.id}</h4></div></div><div class="col-md-6"><div class="p-3 bg-light rounded border"><span class="text-muted small d-block fw-bold text-uppercase">Estado en SAP</span><div class="mt-1">${badgeEstado}</div></div></div></div><h6 class="fw-bold text-dark text-uppercase small mb-2">Desglose Monetario:</h6><ul class="list-group list-group-flush mb-4 small"><li class="list-group-item d-flex justify-content-between bg-transparent"><span>Valor Base:</span><strong>${formatearCOP(f.base)}</strong></li><li class="list-group-item d-flex justify-content-between bg-transparent"><span>Mora SAP:</span><strong class="text-danger">+${formatearCOP(f.mora)}</strong></li><li class="list-group-item d-flex justify-content-between bg-transparent"><span>Descuento:</span><strong class="text-success">-${formatearCOP(f.descuento)}</strong></li><li class="list-group-item d-flex justify-content-between bg-transparent fw-bold fs-6"><span>Total Liquidado:</span><span class="text-primary">${formatearCOP(total)}</span></li></ul><h6 class="fw-bold text-dark text-uppercase small mb-2">Integración Técnica:</h6><div class="p-3 bg-light rounded border font-monospace small mb-4"><div><strong>Ref. ePayco:</strong> ${f.refEpayco || 'Sin transacción'}</div><div><strong>Fecha Vencimiento:</strong> ${f.fechaVencimiento}</div><div><strong>Fecha Pago:</strong> ${f.fechaPago || 'No procesado'}</div></div><h6 class="fw-bold text-dark text-uppercase small mb-2">Acciones del Agente:</h6><div class="d-flex flex-wrap gap-2"><button class="btn btn-sm btn-outline-primary fw-bold" onclick="generarMensajeCliente('${f.id}', '${f.estado}', '${formatearCOP(total)}')"><i class="bi bi-envelope me-1"></i> Generar Mensaje</button><button class="btn btn-sm btn-outline-secondary fw-bold" onclick="alert('Webhook n8n reenviado.')"><i class="bi bi-arrow-repeat me-1"></i> Reenviar Webhook</button></div>`;
+        contenedor.innerHTML = `<div class="p-2 bg-light rounded border mb-3"><span class="text-muted font-xs d-block">Cliente: <strong>${f.clienteNombre || 'ACME Industrial S.A.S.'}</strong> (${f.clienteId || 'CLI-900123456'})</span></div><div class="row g-3 mb-4"><div class="col-md-6"><div class="p-3 bg-light rounded border"><span class="text-muted small d-block fw-bold text-uppercase">Factura ID</span><h4 class="fw-bold text-dark m-0">#${f.id}</h4></div></div><div class="col-md-6"><div class="p-3 bg-light rounded border"><span class="text-muted small d-block fw-bold text-uppercase">Estado en SAP</span><div class="mt-1">${badgeEstado}</div></div></div></div><h6 class="fw-bold text-dark text-uppercase small mb-2">Desglose Monetario:</h6><ul class="list-group list-group-flush mb-4 small"><li class="list-group-item d-flex justify-content-between bg-transparent"><span>Valor Base:</span><strong>${formatearCOP(f.base)}</strong></li><li class="list-group-item d-flex justify-content-between bg-transparent"><span>Mora SAP:</span><strong style="color: #ff851b;">+${formatearCOP(f.mora)}</strong></li><li class="list-group-item d-flex justify-content-between bg-transparent"><span>Descuento:</span><strong class="text-success">-${formatearCOP(f.descuento)}</strong></li><li class="list-group-item d-flex justify-content-between bg-transparent fw-bold fs-6"><span>Total Liquidado:</span><span style="color: #1c7e94;">${formatearCOP(total)}</span></li></ul><h6 class="fw-bold text-dark text-uppercase small mb-2">Integración Técnica:</h6><div class="p-3 bg-light rounded border font-monospace small mb-4"><div><strong>Ref. ePayco:</strong> ${f.refEpayco || 'Sin transacción'}</div><div><strong>Fecha Vencimiento:</strong> ${f.fechaVencimiento}</div><div><strong>Fecha Pago:</strong> ${f.fechaPago || 'No procesado'}</div></div><h6 class="fw-bold text-dark text-uppercase small mb-2">Acciones del Agente:</h6><div class="d-flex flex-wrap gap-2"><button class="btn btn-sm btn-outline-primary fw-bold" onclick="generarMensajeCliente('${f.id}', '${f.estado}', '${formatearCOP(total)}')"><i class="bi bi-envelope me-1"></i> Generar Mensaje</button><button class="btn btn-sm btn-outline-secondary fw-bold" onclick="alert('Webhook n8n reenviado.')"><i class="bi bi-arrow-repeat me-1"></i> Reenviar Webhook</button></div>`;
     }
 
     function renderizarTablaIncidentes(filtroCliente = null) {
