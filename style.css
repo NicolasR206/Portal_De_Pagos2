@@ -7,13 +7,13 @@ html, body {
   overflow-y: auto; /* Fuerza/permite la barra de scroll vertical */
   background-color: #C6D3D8 !important; /* Color de fondo general */
   background-image:
-     linear-gradient(rgba(248, 249, 250, 0.88), rgba(248, 249, 250, 0.88)), 
-    url('multimedia/Fondo.svg'); /* Imagen de fondo */
+     linear-gradient(rgba(248, 249, 250, 0.85), rgba(248, 249, 250, 0.85)), 
+    url('multimedia/FondoSac.svg'); /* Imagen de fondo */
   background-size: cover; /* Ajusta la imagen al tamaño del contenedor */   
   background-position: center center;
   background-attachment: fixed;
   background-size: contain;
-  opacity: 100.1%; /* Ajusta la opacidad de la imagen de fondo */
+  opacity: 100.0%; /* Ajusta la opacidad de la imagen de fondo */
 
 }
 
